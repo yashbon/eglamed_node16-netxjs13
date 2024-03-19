@@ -3,7 +3,7 @@
 export default function Home() {
     return (
         <main>
-            <h1>EglaMed - we will launch soon!</h1>
+            <h1>Welcome to EglaMed! We will launch soon!</h1>
         </main>
     );
 }
