@@ -1,0 +1,9 @@
+.header{
+    @media (min-width: 768px) {
+        position: static;
+        height: auto;
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+}
