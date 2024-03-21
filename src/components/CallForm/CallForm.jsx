@@ -144,7 +144,7 @@ const CallForm = () => {
                             <br /> ми вам передзвонимо
                         </h3>
                         <label className={css.formLabel}>
-                            Імя<span className={css.accent}>*</span>
+                            Ім&apos;я<span className={css.accent}>*</span>
                         </label>
                         <input
                             type="text"

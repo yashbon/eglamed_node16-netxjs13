@@ -21,10 +21,10 @@ export default function Home() {
                 <Doctors />
                 <About />
                 <Pricelist />
-                {/* <CallForm /> */}
+                <CallForm />
                 <ContactUs />
             </main>
-            {/* <ButtonCallForm /> */}
+            <ButtonCallForm />
             <ButtonScrollUp />
             <Footer />
         </>
