@@ -2,7 +2,7 @@ var express = require("express"),
     app = express(),
     port = process.env.PORT || 4000;
 
-app.use(express.static("dist"));
+app.use(express.static("production"));
 
 // var routes = require("./api/routes");
 // routes(app);
