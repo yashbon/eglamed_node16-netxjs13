@@ -38,7 +38,7 @@ const Navbar = () => {
         <section className={navbar ? css.scrolled : css.navbar} ref={menuRef}>
             <div className="container">
                 <div className={css.navbarWrapper}>
-                    <a href="">
+                    <a href="/">
                         <Logo />
                     </a>
                     <Navigation
