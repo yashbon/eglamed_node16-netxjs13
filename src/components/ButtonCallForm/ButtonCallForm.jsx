@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import css from "./ButtonCallForm.module.css";
+import scrollToCallForm from "@/services/scrollToCallForm";
 
 const ButtonCallForm = () => {
     const [showButtonCallForm, setShowButtonCallForm] = useState(true);
@@ -15,13 +16,6 @@ const ButtonCallForm = () => {
                 : setShowButtonCallForm(true);
         });
     });
-
-    const scrollToCallForm = () => {
-        const element = document.getElementById("callform");
-        element.scrollIntoView({
-            behavior: "smooth",
-        });
-    };
 
     return (
         showButtonCallForm && (

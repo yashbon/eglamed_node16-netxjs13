@@ -38,13 +38,17 @@
 }
 
 .navList {
-    display: block;
+    /* display: block; */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 
     @media (min-width: 768px) {
-        display: flex;
+        /* display: flex; */
+        flex-direction: row;
         align-items: center;
 
-        gap: 10px;
+        /* gap: 10px; */
 
     }
 
@@ -77,11 +81,7 @@
         font-size: 20px;
         font-weight: bold;
     }
-
-
 }
-
-
 
 .navLink:last-child {
     margin-bottom: 0;
@@ -90,9 +90,6 @@
 .navText {
     position: relative;
     padding-bottom: 5px;
-
-
-
 }
 
 .navText::after {
