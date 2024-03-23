@@ -1,5 +1,5 @@
 "use client";
-import ReCAPTCHA from "react-google-recaptcha";
+// import ReCAPTCHA from "react-google-recaptcha";
 import React, { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { motion } from "framer-motion";
@@ -7,7 +7,7 @@ import Button from "@/ui/Button/Button";
 import prices from "@/data/price";
 import { animation } from "@/data/animation";
 import * as API from "@/services/api";
-import verifyCaptcha from "@/services/verifyCaptcha";
+// import verifyCaptcha from "@/services/verifyCaptcha";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { useService } from "@/hooks/serviceContext";
 import formatPhoneNumber from "@/services/formatPhoneNumber";
@@ -75,51 +75,87 @@ const CallForm = () => {
                 `Поставте "V" у полі "Погоджуюся з Політикою конфіденційності"`,
                 { duration: 3000, position: "top-center" }
             );
-        } else if (!captcha) {
-            toast.error(`Поставте "V" у полі "Я не робот"`, {
-                duration: 3000,
-                position: "top-center",
-            });
-        } else {
+        }
+
+        //  *************** РОЗКОМЕНТУВАТИ ПІСЛЯ ВИПРАВИЛЕННЯ ПОМИЛОК!!!!!
+        //  else if (!captcha) {
+        //     toast.error(`Поставте "V" у полі "Я не робот"`, {
+        //         duration: 3000,
+        //         position: "top-center",
+        //     });
+        // }
+        // ***************** РОЗКОМЕНТУВАТИ ПІСЛЯ ВИПРАВИЛЕННЯ ПОМИЛОК!!!!!
+        else {
             const message = `Ім'я: ${name}\nПрізвище: ${surname}\nТелефон: +38 ${phone}\nПослуга: ${service}\nКоментар: ${comment}`;
 
-            await verifyCaptcha(captcha)
-                .then((res) => {
-                    setIsClickBut(true);
+            // ****************** ВИДАЛИТИ ПІСЛЯ ВИПРАВЛЕННЯ ПОМИЛОК!!!!!
+            setIsClickBut(true);
 
-                    API.sendMessageToTelegram(message)
-                        .then((response) => {
-                            setTimeout(() => {
-                                setIsClickBut(false);
-                            }, 500);
+            API.sendMessageToTelegram(message)
+                .then((response) => {
+                    setTimeout(() => {
+                        setIsClickBut(false);
+                    }, 500);
 
-                            setIsFetchOk(true);
-                            setTimeout(() => {
-                                setIsFetchOk(false);
-                            }, 4000);
+                    setIsFetchOk(true);
+                    setTimeout(() => {
+                        setIsFetchOk(false);
+                    }, 4000);
 
-                            toast.success("Дані відправлено успішно!");
-                        })
-                        .catch((error) => {
-                            const errorMessage =
-                                "Ой! Щось пішло не так :( Перезавантажте сторінку та спробуйте ще раз.\n";
-                            toast.error(errorMessage);
-
-                            setIsClickBut(false);
-                        })
-                        .finally(() => {
-                            setData(initialValues);
-                            setCaptcha(null);
-                        });
+                    toast.success("Дані відправлено успішно!");
                 })
                 .catch((error) => {
-                    console.log(error);
                     const errorMessage =
                         "Ой! Щось пішло не так :( Перезавантажте сторінку та спробуйте ще раз.\n";
                     toast.error(errorMessage);
 
-                    setCaptcha(false);
+                    setIsClickBut(false);
+                })
+                .finally(() => {
+                    setData(initialValues);
+                    setCaptcha(null);
                 });
+            // ****************** ВИДАЛИТИ ПІСЛЯ ВИПРАВЛЕННЯ ПОМИЛОК!!!!!
+
+            // ***************** РОЗКОМЕНТУВАТИ ПІСЛЯ ВИПРАВИЛЕННЯ ПОМИЛОК!!!!!
+            // await verifyCaptcha(captcha)
+            //     .then((res) => {
+            //         setIsClickBut(true);
+
+            //         API.sendMessageToTelegram(message)
+            //             .then((response) => {
+            //                 setTimeout(() => {
+            //                     setIsClickBut(false);
+            //                 }, 500);
+
+            //                 setIsFetchOk(true);
+            //                 setTimeout(() => {
+            //                     setIsFetchOk(false);
+            //                 }, 4000);
+
+            //                 toast.success("Дані відправлено успішно!");
+            //             })
+            //             .catch((error) => {
+            //                 const errorMessage =
+            //                     "Ой! Щось пішло не так :( Перезавантажте сторінку та спробуйте ще раз.\n";
+            //                 toast.error(errorMessage);
+
+            //                 setIsClickBut(false);
+            //             })
+            //             .finally(() => {
+            //                 setData(initialValues);
+            //                 setCaptcha(null);
+            //             });
+            //     })
+            //     .catch((error) => {
+            //         console.log(error);
+            //         const errorMessage =
+            //             "Ой! Щось пішло не так :( Перезавантажте сторінку та спробуйте ще раз.\n";
+            //         toast.error(errorMessage);
+
+            //         setCaptcha(false);
+            //     });
+            // ***************** РОЗКОМЕНТУВАТИ ПІСЛЯ ВИПРАВИЛЕННЯ ПОМИЛОК!!!!!
         }
     };
 
@@ -228,10 +264,10 @@ const CallForm = () => {
                             onChange={handleChange}
                         />
 
-                        <ReCAPTCHA
+                        {/* <ReCAPTCHA
                             sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
                             onChange={setCaptcha}
-                        />
+                        /> */}
                         <div className={css.butWrapper}>
                             <div className={css.butWrap}>
                                 <Button
