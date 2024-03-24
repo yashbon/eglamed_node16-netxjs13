@@ -41,7 +41,7 @@ const CardDoctor = ({ doctor }) => {
                         }}
                         transition={{
                             duration: 0.8,
-                            ease: [0.04, 0.62, 0.23, 0.98],
+                            ease: [0.4, 0.62, 0.23, 0.98],
                         }}
                     >
                         <AboutDoctor doctor={doctor} show={showDocInfo} />
