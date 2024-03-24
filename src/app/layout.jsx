@@ -38,7 +38,7 @@ export default function RootLayout({ children }) {
         <html lang="uk">
             <body className={arsenal.className} suppressHydrationWarning={true}>
                 <Providers>{children}</Providers>
-                {/* <GoogleTagManager gtmId="G-HY7BR4SZYX" /> */}
+                <GoogleTagManager gtmId="G-HY7BR4SZYX" />
             </body>
         </html>
     );

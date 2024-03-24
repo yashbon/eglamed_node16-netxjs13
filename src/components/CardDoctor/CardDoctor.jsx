@@ -5,6 +5,7 @@ import { useState } from "react";
 import Button from "../../ui/Button/Button";
 import css from "./CardDoctor.module.css";
 import AboutDoctor from "../AboutDoctor/AboutDoctor";
+import { motion, AnimatePresence } from "framer-motion";
 
 const CardDoctor = ({ doctor }) => {
     const [showDocInfo, setShowDocIfo] = useState(false);
@@ -26,7 +27,27 @@ const CardDoctor = ({ doctor }) => {
                 <h3 className={css.cardTitle}>{doctor.name}</h3>
                 <span className={css.cardSpecialty}>{doctor.specialty}</span>
             </div>
-            {showDocInfo && <AboutDoctor doctor={doctor} />}
+
+            <AnimatePresence initial={false}>
+                {showDocInfo && (
+                    <motion.div
+                        key="content"
+                        initial="collapsed"
+                        animate="open"
+                        exit="collapsed"
+                        variants={{
+                            open: { opacity: 1, height: "auto" },
+                            collapsed: { opacity: 0, height: 0 },
+                        }}
+                        transition={{
+                            duration: 0.8,
+                            ease: [0.04, 0.62, 0.23, 0.98],
+                        }}
+                    >
+                        <AboutDoctor doctor={doctor} show={showDocInfo} />
+                    </motion.div>
+                )}
+            </AnimatePresence>
             <div className={css.butWrapper}>
                 <Button
                     type="button"
