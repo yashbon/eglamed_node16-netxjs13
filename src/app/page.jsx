@@ -8,12 +8,14 @@ import Footer from "@/components/Footer/Footer";
 import About from "@/components/About/About";
 import CallForm from "@/components/CallForm/CallForm";
 import ButtonScrollUp from "@/components/ButtonScrollUp/ButtonScrollUp";
-import styles from "./page.module.css";
 import ButtonCallForm from "@/components/ButtonCallForm/ButtonCallForm";
+import styles from "./page.module.css";
+import ProgressBar from "@/ui/ProgressBar/ProgressBar";
 
 export default function Home() {
     return (
         <>
+            <ProgressBar />
             <Header />
             <main className={styles.main}>
                 <Hero />

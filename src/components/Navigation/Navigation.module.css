@@ -1,6 +1,6 @@
 .nav {
     position: fixed;
-    top: 0;
+    top: 9px;
     left: -225px;
     display: block;
     width: 220px;

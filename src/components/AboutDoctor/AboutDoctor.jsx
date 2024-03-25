@@ -3,12 +3,7 @@ import { motion } from "framer-motion";
 
 const AboutDoctor = ({ doctor, show }) => {
     return (
-        <article
-            className={css.aboutDoctor}
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 0.8 }}
-            style={{ x: 100 }}
-        >
+        <article className={css.aboutDoctor}>
             <div className={css.doctorMain}>
                 <p>Кваліфікація: {doctor.qualification}</p>
                 <p>Стаж роботи: {doctor.experience}</p>
