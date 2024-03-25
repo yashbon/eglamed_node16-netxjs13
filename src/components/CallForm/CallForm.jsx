@@ -1,17 +1,18 @@
 "use client";
+import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { motion } from "framer-motion";
 import Button from "@/ui/Button/Button";
 import prices from "@/data/price";
 import { animation } from "@/data/animation";
 import * as API from "@/services/api";
-import verifyCaptcha from "@/services/verifyCaptcha";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { useService } from "@/hooks/serviceContext";
 import formatPhoneNumber from "@/services/formatPhoneNumber";
 import css from "./CallForm.module.css";
+
 
 const LS_KEY = "call_form";
 
@@ -30,7 +31,8 @@ const CallForm = () => {
     const { name, surname, phone, service, comment, policy } = data;
     const [isClickBut, setIsClickBut] = useState(false);
     const [isFetchOk, setIsFetchOk] = useState(false);
-    const [captcha, setCaptcha] = useState(null);
+
+    const captchaRef = useRef(null);
 
     useEffect(() => {
         setData((prevState) => ({
@@ -65,6 +67,8 @@ const CallForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const token = captchaRef.current.getValue();
+
         if (service === "") {
             toast.error(`Оберіть потрібну послугу з переліку`, {
                 duration: 3000,
@@ -75,7 +79,7 @@ const CallForm = () => {
                 `Поставте "V" у полі "Погоджуюся з Політикою конфіденційності"`,
                 { duration: 3000, position: "top-center" }
             );
-        } else if (!captcha) {
+        } else if (!token) {
             toast.error(`Поставте "V" у полі "Я не робот"`, {
                 duration: 3000,
                 position: "top-center",
@@ -83,42 +87,44 @@ const CallForm = () => {
         } else {
             const message = `Ім'я: ${name}\nПрізвище: ${surname}\nТелефон: +38 ${phone}\nПослуга: ${service}\nКоментар: ${comment}`;
 
-            await verifyCaptcha(captcha)
+            await axios.post("http://localhost:4000/post", { token })
                 .then((res) => {
-                    setIsClickBut(true);
+                    if(res.data==="Human 👨 👩"){
+                        setIsClickBut(true);
 
-                    API.sendMessageToTelegram(message)
-                        .then((response) => {
-                            setTimeout(() => {
+                        API.sendMessageToTelegram(message)
+                            .then((response) => {
+                                setTimeout(() => {
+                                    setIsClickBut(false);
+                                }, 500);
+
+                                setIsFetchOk(true);
+                                setTimeout(() => {
+                                    setIsFetchOk(false);
+                                }, 4000);
+
+                                toast.success("Дані відправлено успішно!");
+                            })
+                            .catch((error) => {
+                                const errorMessage =
+                                    "Ой! Щось пішло не так :( Перезавантажте сторінку та спробуйте ще раз.\n";
+                                toast.error(errorMessage);
+
                                 setIsClickBut(false);
-                            }, 500);
-
-                            setIsFetchOk(true);
-                            setTimeout(() => {
-                                setIsFetchOk(false);
-                            }, 4000);
-
-                            toast.success("Дані відправлено успішно!");
-                        })
-                        .catch((error) => {
-                            const errorMessage =
-                                "Ой! Щось пішло не так :( Перезавантажте сторінку та спробуйте ще раз.\n";
-                            toast.error(errorMessage);
-
-                            setIsClickBut(false);
-                        })
-                        .finally(() => {
-                            setData(initialValues);
-                            setCaptcha(null);
-                        });
-                })
+                            })
+                            .finally(() => {
+                                setData(initialValues);
+                                captchaRef.current.reset();
+                            });
+                    }
+                    else{
+                        toast.error("Robot 🤖. Перезавантажте сторінку та спробуйте ще раз.");
+                    }
+               })
                 .catch((error) => {
-                    console.log(error);
                     const errorMessage =
                         "Ой! Щось пішло не так :( Перезавантажте сторінку та спробуйте ще раз.\n";
                     toast.error(errorMessage);
-
-                    setCaptcha(false);
                 });
         }
     };
@@ -230,8 +236,10 @@ const CallForm = () => {
 
                         <ReCAPTCHA
                             sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                            onChange={setCaptcha}
+                            ref={captchaRef}
+             
                         />
+
                         <div className={css.butWrapper}>
                             <div className={css.butWrap}>
                                 <Button
