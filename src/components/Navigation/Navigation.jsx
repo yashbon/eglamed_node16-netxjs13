@@ -3,25 +3,30 @@
 import { useEffect } from "react";
 import { Link } from "react-scroll";
 import navigation from "@/data/navigation.json";
-import scrollToCallForm from "@/services/scrollToCallForm";
 import css from "./Navigation.module.css";
-import ButtonAppointment from "@/ui/ButtonAppointment/ButtonAppointment";
 
 const Navigation = ({ isOpen, handleSetActiveMenu }) => {
+ 
     useEffect(() => {
-        if (isOpen) {
+        if(isOpen){
             document.body.getElementsByTagName("main")[0].style.filter =
                 "blur(5px)";
             document.body.getElementsByTagName("footer")[0].style.filter =
                 "blur(5px)";
-        } else {
-            document.body.getElementsByTagName("main")[0].style.filter = "";
-            document.body.getElementsByTagName("footer")[0].style.filter = "";
+        }
+        else{
+            document.body.getElementsByTagName("main")[0].style.filter =
+            "";
+            document.body.getElementsByTagName("footer")[0].style.filter =
+            "";
         }
     }, [isOpen]);
+    
 
     return (
-        <nav className={`${css.nav} ${isOpen && css.navActive}`}>
+        <nav
+            className={`${css.nav} ${isOpen && css.navActive}`}
+        >
             <ul className={css.navList}>
                 {navigation.map(({ id, src, text }) => (
                     <li key={id}>
@@ -39,9 +44,6 @@ const Navigation = ({ isOpen, handleSetActiveMenu }) => {
                         </Link>
                     </li>
                 ))}
-                <li>
-                    <ButtonAppointment onClick={scrollToCallForm} />
-                </li>
             </ul>
         </nav>
     );

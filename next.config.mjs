@@ -4,7 +4,7 @@ const nextConfig = {
     distDir: "production",
     // experimental: {
     //     serverActions: true,
-    // },
+    //   },
 };
 
 export default nextConfig;

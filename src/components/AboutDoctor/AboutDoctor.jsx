@@ -1,7 +1,6 @@
 import css from "./AboutDoctor.module.css";
-import { motion } from "framer-motion";
 
-const AboutDoctor = ({ doctor, show }) => {
+const AboutDoctor = ({ doctor }) => {
     return (
         <article className={css.aboutDoctor}>
             <div className={css.doctorMain}>
