@@ -13,7 +13,6 @@ import { useService } from "@/hooks/serviceContext";
 import formatPhoneNumber from "@/services/formatPhoneNumber";
 import css from "./CallForm.module.css";
 
-
 const LS_KEY = "call_form";
 
 const CallForm = () => {
@@ -87,9 +86,10 @@ const CallForm = () => {
         } else {
             const message = `Ім'я: ${name}\nПрізвище: ${surname}\nТелефон: +38 ${phone}\nПослуга: ${service}\nКоментар: ${comment}`;
 
-            await axios.post("http://localhost:4000/post", { token })
+            await axios
+                .post("http://localhost:4000/post", { token })
                 .then((res) => {
-                    if(res.data==="Human 👨 👩"){
+                    if (res.data === "Human 👨 👩") {
                         setIsClickBut(true);
 
                         API.sendMessageToTelegram(message)
@@ -116,11 +116,12 @@ const CallForm = () => {
                                 setData(initialValues);
                                 captchaRef.current.reset();
                             });
+                    } else {
+                        toast.error(
+                            "Robot 🤖. Перезавантажте сторінку та спробуйте ще раз."
+                        );
                     }
-                    else{
-                        toast.error("Robot 🤖. Перезавантажте сторінку та спробуйте ще раз.");
-                    }
-               })
+                })
                 .catch((error) => {
                     const errorMessage =
                         "Ой! Щось пішло не так :( Перезавантажте сторінку та спробуйте ще раз.\n";
@@ -237,7 +238,6 @@ const CallForm = () => {
                         <ReCAPTCHA
                             sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
                             ref={captchaRef}
-             
                         />
 
                         <div className={css.butWrapper}>
