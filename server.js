@@ -15,7 +15,7 @@ app.use(express.static("production"));
 
 app.use("/", router);
 
-router.post("/post", async (req, res) => {
+router.post("/recaptcha", async (req, res) => {
     const { token } = req.body;
 
     try {
