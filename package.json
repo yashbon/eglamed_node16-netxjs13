@@ -26,7 +26,6 @@
         "react-loader-spinner": "^6.1.0",
         "react-scroll": "^1.9.0",
         "react-slideshow-image": "^4.3.0",
-        "reaptcha": "^1.12.1",
         "supports-color": "^8.1.1",
         "swiper": "^11.0.5",
         "vercel": "^32.5.3"
