@@ -87,7 +87,7 @@ const CallForm = () => {
             const message = `Ім'я: ${name}\nПрізвище: ${surname}\nТелефон: +38 ${phone}\nПослуга: ${service}\nКоментар: ${comment}`;
 
             await axios
-                .post("http://localhost:4000/recaptcha", { token })
+                .post("/recaptcha", { token })
                 .then((res) => {
                     if (res.data === "Human 👨 👩") {
                         setIsClickBut(true);
