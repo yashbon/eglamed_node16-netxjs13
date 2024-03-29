@@ -27,8 +27,9 @@
 
 .footerTitle {
     max-width: 100%;
-    color: var(--primary-color);
     margin-bottom: 15px;
+    text-align: center;
+    color: var(--primary-color);
     font-size: 20px;
     font-weight: bold;
     opacity: 0.6;
